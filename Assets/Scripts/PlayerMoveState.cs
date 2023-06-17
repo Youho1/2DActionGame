@@ -18,9 +18,8 @@ public class PlayerMoveState : PlayerGroundedState
     public override void Update()
     {
         base.Update();
-
         MovementExecute();
-        if (!_player.canMove)
+        if (!_player.canMove || _player.input.MovementInputValue.x == _player.facingDir && _player.isWallDetected)
         {
             _stateMachine.ChangeStateTo(_player.IdleState);
         }

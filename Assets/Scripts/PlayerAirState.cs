@@ -22,12 +22,27 @@ public class PlayerAirState : PlayerState
         {
             _stateMachine.ChangeStateTo(_player.IdleState);
         }
+        if (_player.canDash)
+        {
+            _stateMachine.ChangeStateTo(_player.DashState);
+        }
+        if (_player.input.MovementInputValue.x != 0)
+        {
+            _player.SetVelocity(_player.runSpeed * .8f * _player.movement.x, rb.velocity.y);
+        }
 
+        if (_player.canJump)
+        {
+            _stateMachine.ChangeStateTo(_player.JumpState);
+        }
+        if (_player.isWallDetected && _player.strength > 0)
+        {
+            _stateMachine.ChangeStateTo(_player.WallSlide);
+        }
     }
 
     public override void Exit()
     {
         base.Exit();
-        _player.isAir = false;
     }
 }

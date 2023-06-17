@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 public class APlayerInput : MonoBehaviour
 {
     private Player _player;
-
+    public Vector2 MovementInputValue { get; private set; }
     #region Input
 
     private PlayerInput _input;
@@ -33,10 +33,11 @@ public class APlayerInput : MonoBehaviour
 
     private void OnMove(InputAction.CallbackContext context)
     {
-        _player.movement.x = context.ReadValue<float>();
+
+        MovementInputValue = context.ReadValue<Vector2>();
+        _player.movement.x = MovementInputValue.x;
         IsMoveButtonPressed = _player.movement.x != 0;
-        if (!_player.isDashing)
-            _player.FlipController(_player.movement.x);
+
     }
 
     private void OnAttack(InputAction.CallbackContext context)
